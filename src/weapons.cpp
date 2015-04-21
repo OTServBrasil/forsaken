@@ -424,14 +424,12 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Tile* tile) const
 
 void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 {
-	bool isDualWielding = player->isDualWielding();
-
 	if (!player->hasFlag(PlayerFlag_NotGainSkill)) {
 		skills_t skillType;
 		uint32_t skillPoint;
 		if (getSkillType(player, item, skillType, skillPoint)) {
 			/* Advance one point for every single-wielding hit OR one point for every left hand hit (every two) */
-			if (!isDualWielding || item == player->getWeapon(CONST_SLOT_LEFT, true)) {
+			if (!player->isDualWielding() || item == player->getWeapon(CONST_SLOT_LEFT, true)) {
 				player->addSkillAdvance(skillType, skillPoint);
 			}
 		}
