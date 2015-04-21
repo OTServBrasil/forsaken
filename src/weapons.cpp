@@ -324,6 +324,10 @@ int32_t Weapon::playerWeaponCheck(Player* player, Creature* target, uint8_t shoo
 		}
 
 		int32_t damageModifier = 100;
+		if (player->isDualWielding()) {
+			damageModifier = g_config.getNumber(ConfigManager::DUAL_WIELDING_DAMAGE_RATE);
+		}
+
 		if (player->getLevel() < getReqLevel()) {
 			damageModifier = (isWieldedUnproperly() ? damageModifier / 2 : 0);
 		}
