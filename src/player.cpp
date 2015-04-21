@@ -417,7 +417,7 @@ void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 	weapon = nullptr;
 
 	if (isDualWielding()) {
-		if (getAttackHand() == HAND_LEFT) {
+		if (lastAttackHand == HAND_LEFT) {
 			shield = inventory[CONST_SLOT_RIGHT];
 			weapon = inventory[CONST_SLOT_LEFT];
 		} else {
