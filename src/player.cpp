@@ -333,6 +333,11 @@ Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 
 Item* Player::getWeapon(bool ignoreAmmo/* = false*/) const
 {
+	/* If player is dual wielding, we already assured he has weapons in both hands. */
+	if (isDualWielding()) {
+		return getWeapon(getAttackHand(), ignoreAmmo);
+	}
+
 	Item* item = getWeapon(CONST_SLOT_LEFT, ignoreAmmo);
 	if (item) {
 		return item;
