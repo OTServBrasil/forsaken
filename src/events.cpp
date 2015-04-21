@@ -59,6 +59,9 @@ void Events::clear()
 	playerOnGainExperience = -1;
 	playerOnLoseExperience = -1;
 	playerOnGainSkillTries = -1;
+
+	// Monster
+	monsterOnSpawn = -1;
 }
 
 bool Events::load()
@@ -139,6 +142,12 @@ bool Events::load()
 				playerOnGainSkillTries = event;
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
+			}
+		} else if (className == "Monster") {
+			if (methodName == "onSpawn") {
+				monsterOnSpawn = event;
+			} else {
+				std::cout << "[Warning - Events::load] Unknown monster method: " << methodName << std::endl;
 			}
 		} else {
 			std::cout << "[Warning - Events::load] Unknown class: " << className << std::endl;
@@ -751,4 +760,32 @@ void Events::eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_
 	}
 
 	scriptInterface.resetScriptEnv();
+}
+
+// Monster
+bool Events::eventMonsterOnSpawn(Monster* monster, const Position& position, bool forced) {
+	// Monster:onSpawn(pos, forced)
+	if (monsterOnSpawn == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventMonsterOnSpawn] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(monsterOnSpawn, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(monsterOnSpawn);
+
+	LuaScriptInterface::pushUserdata<Monster>(L, monster);
+	LuaScriptInterface::setMetatable(L, -1, "Monster");
+
+	LuaScriptInterface::pushPosition(L, position);
+
+	LuaScriptInterface::pushBoolean(L, forced);
+
+	return scriptInterface.callFunction(3);
 }

@@ -158,10 +158,6 @@ class MonsterType
 		bool isAttackable;
 		bool isHostile;
 		bool hiddenHealth;
-
-		void createLoot(Container* corpse);
-		bool createLootContainer(Container* parent, const LootBlock& lootblock);
-		std::vector<Item*> createLootItem(const LootBlock& lootBlock);
 };
 
 class Monsters
@@ -181,8 +177,6 @@ class Monsters
 
 		MonsterType* getMonsterType(const std::string& name);
 		uint32_t getIdByName(const std::string& name);
-
-		static uint32_t getLootRandom();
 
 	private:
 		ConditionDamage* getDamageCondition(ConditionType_t conditionType,

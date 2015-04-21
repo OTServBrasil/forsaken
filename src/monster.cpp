@@ -1889,13 +1889,6 @@ void Monster::updateLookDirection()
 	g_game.internalCreatureTurn(this, newDir);
 }
 
-void Monster::dropLoot(Container* corpse, Creature*)
-{
-	if (corpse && lootDrop) {
-		mType->createLoot(corpse);
-	}
-}
-
 void Monster::setNormalCreatureLight()
 {
 	internalLight.level = mType->lightLevel;

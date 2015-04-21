@@ -257,7 +257,6 @@ class Monster final : public Creature
 		uint16_t getLookCorpse() const final {
 			return mType->lookcorpse;
 		}
-		void dropLoot(Container* corpse, Creature* lastHitCreature) final;
 		uint32_t getDamageImmunities() const final {
 			return mType->damageImmunities;
 		}
