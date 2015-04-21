@@ -416,26 +416,36 @@ void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 	shield = nullptr;
 	weapon = nullptr;
 
-	for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
-		Item* item = inventory[slot];
-		if (!item) {
-			continue;
+	if (isDualWielding()) {
+		if (getAttackHand() == HAND_LEFT) {
+			shield = inventory[CONST_SLOT_RIGHT];
+			weapon = inventory[CONST_SLOT_LEFT];
+		} else {
+			shield = inventory[CONST_SLOT_LEFT];
+			weapon = inventory[CONST_SLOT_RIGHT];
 		}
-
-		switch (item->getWeaponType()) {
-			case WEAPON_NONE:
-				break;
-
-			case WEAPON_SHIELD: {
-				if (!shield || item->getDefense() > shield->getDefense()) {
-					shield = item;
-				}
-				break;
+	} else {
+		for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
+			Item *item = inventory[slot];
+			if (!item) {
+				continue;
 			}
 
-			default: { // weapons that are not shields
-				weapon = item;
-				break;
+			switch (item->getWeaponType()) {
+				case WEAPON_NONE:
+					break;
+
+				case WEAPON_SHIELD: {
+					if (!shield || item->getDefense() > shield->getDefense()) {
+						shield = item;
+					}
+					break;
+				}
+
+				default: { // weapons that are not shields
+					weapon = item;
+					break;
+				}
 			}
 		}
 	}
@@ -3526,7 +3536,7 @@ void Player::onAttackedCreature(Creature* target)
 	if (target && target->getZone() == ZONE_PVP) {
 		return;
 	}
-	
+
 	if (target == this) {
 		addInFightTicks();
 		return;
