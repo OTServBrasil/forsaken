@@ -445,7 +445,6 @@ bool Player::isDualWielding() const
 {
 	/* Not checking dual wield because the player can't wear two weapons worn without it */
 	if (this->getWeapon(CONST_SLOT_LEFT, true) && this->getWeapon(CONST_SLOT_RIGHT, true)) {
-		std::cout << "Player is dual wielding, returning true..." << std::endl;
 		return true;
 	}
 	return false;
