@@ -1848,6 +1848,17 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 	sendStats();
 }
 
+uint32_t Player::getAttackSpeed() const {
+	uint32_t ret = vocation->getAttackSpeed();
+
+	/* Not checking dual wield because the player can't wear two weapons worn without it */
+	if (this->getWeapon(CONST_SLOT_LEFT, true) && this->getWeapon(CONST_SLOT_RIGHT, true)) {
+		ret = ret * g_config.getNumber(ConfigManager::DUAL_WIELDING_SPEED_RATE) / 100;
+	}
+
+	return ret;
+}
+
 uint8_t Player::getPercentLevel(uint64_t count, uint64_t nextLevelCount)
 {
 	if (nextLevelCount == 0) {
