@@ -1877,7 +1877,8 @@ uint32_t Player::getAttackSpeed() const {
 	uint32_t ret = vocation->getAttackSpeed();
 
 	if (isDualWielding()) {
-		ret = ret * g_config.getNumber(ConfigManager::DUAL_WIELDING_SPEED_RATE) / 100;
+		double multiplier = 100.0 / static_cast<double>(g_config.getNumber(ConfigManager::DUAL_WIELDING_SPEED_RATE));
+		ret = static_cast<uint32_t>(std::ceil(static_cast<double>(ret) * multiplier));
 	}
 
 	return ret;
