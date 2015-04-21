@@ -72,6 +72,14 @@ maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = false
 
+-- Dual wielding
+-- NOTE: the rate are the percentage of the single-wielding values, for
+-- example, if dualWieldingSpeedFactor is 50 then dual wielding speed attack
+-- will be 50% of normal attack speed.
+allowDualWielding = true
+dualWieldingSpeedRate = 50
+dualWieldingDamageRate = 60
+
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
 rateExp = 5
