@@ -98,6 +98,7 @@ Player::Player(ProtocolGame_ptr p) :
 	lastAttackBlockType = BLOCK_NONE;
 	addAttackSkillPoint = false;
 	lastAttack = 0;
+	lastAttackHand = HAND_LEFT;
 
 	blessings = 0;
 
