@@ -437,6 +437,9 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 		}
 	}
 
+	/* There's not even the need to check if player is dual wielding: the variable is ignored otherwise. */
+	player->switchAttackHand();
+
 	uint32_t manaCost = getManaCost(player);
 	if (manaCost != 0) {
 		player->addManaSpent(manaCost);
