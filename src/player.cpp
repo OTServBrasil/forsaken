@@ -3328,16 +3328,21 @@ void Player::doAttacking(uint32_t)
 		Item* tool = getWeapon();
 		const Weapon* weapon = g_weapons->getWeapon(tool);
 		if (weapon) {
+			uint32_t delay;
+
 			if (!weapon->interruptSwing()) {
 				result = weapon->useWeapon(this, tool, attackedCreature);
+				delay = getAttackSpeed();
 			} else if (!canDoAction()) {
-				uint32_t delay = getNextActionTime();
-				SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::checkCreatureAttack,
-				                      &g_game, getID()));
-				setNextActionTask(task);
+				delay = getNextActionTime();
 			} else {
 				result = weapon->useWeapon(this, tool, attackedCreature);
+				delay = getAttackSpeed();
 			}
+
+			SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::checkCreatureAttack,
+																				 &g_game, getID()));
+			setNextActionTask(task);
 		} else {
 			result = Weapon::useFist(this, attackedCreature);
 		}
