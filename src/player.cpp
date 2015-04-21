@@ -2511,12 +2511,14 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 						ret = RETURNVALUE_NOERROR;
 					} else if (leftType == WEAPON_SHIELD && type == WEAPON_SHIELD) {
 						ret = RETURNVALUE_CANONLYUSEONESHIELD;
-					} else /*if (leftType == WEAPON_NONE || type == WEAPON_NONE ||
+					} else if (leftType == WEAPON_NONE || type == WEAPON_NONE ||
 					           leftType == WEAPON_SHIELD || leftType == WEAPON_AMMO
-					           || type == WEAPON_SHIELD || type == WEAPON_AMMO)*/ {
+					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
 						ret = RETURNVALUE_NOERROR;
-					/*} else {
-						ret = RETURNVALUE_CANONLYUSEONEWEAPON;*/
+					} else if (g_config.getBoolean(ConfigManager::ALLOW_DUAL_WIELDING)) {
+						ret = RETURNVALUE_NOERROR;
+					} else {
+						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
 					}
 				} else {
 					ret = RETURNVALUE_NOERROR;
@@ -2552,12 +2554,14 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 						ret = RETURNVALUE_NOERROR;
 					} else if (rightType == WEAPON_SHIELD && type == WEAPON_SHIELD) {
 						ret = RETURNVALUE_CANONLYUSEONESHIELD;
-					} else /*if (rightType == WEAPON_NONE || type == WEAPON_NONE ||
+					} else if (rightType == WEAPON_NONE || type == WEAPON_NONE ||
 					           rightType == WEAPON_SHIELD || rightType == WEAPON_AMMO
-					           || type == WEAPON_SHIELD || type == WEAPON_AMMO)*/ {
+					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
 						ret = RETURNVALUE_NOERROR;
-					/*} else {
-						ret = RETURNVALUE_CANONLYUSEONEWEAPON;*/
+					} else if (g_config.getBoolean(ConfigManager::ALLOW_DUAL_WIELDING)) {
+						ret = RETURNVALUE_NOERROR;
+					} else {
+						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
 					}
 				} else {
 					ret = RETURNVALUE_NOERROR;
