@@ -3340,9 +3340,11 @@ void Player::doAttacking(uint32_t)
 				delay = getAttackSpeed();
 			}
 
-			SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::checkCreatureAttack,
+			if (delay % EVENT_CREATURE_THINK_INTERVAL) {
+				SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::checkCreatureAttack,
 																				 &g_game, getID()));
-			setNextActionTask(task);
+				setNextActionTask(task);
+			}
 		} else {
 			result = Weapon::useFist(this, attackedCreature);
 		}
