@@ -187,6 +187,8 @@ bool CreatureEvent::configureEvent(const pugi::xml_node& node)
 		type = CREATURE_EVENT_MANACHANGE;
 	} else if (tmpStr == "extendedopcode") {
 		type = CREATURE_EVENT_EXTENDED_OPCODE;
+	} else if (tmpStr == "move") {
+		type = CREATURE_EVENT_MOVE;
 	} else {
 		std::cout << "[Error - CreatureEvent::configureEvent] Invalid type for creature event: " << eventName << std::endl;
 		return false;
@@ -235,6 +237,9 @@ std::string CreatureEvent::getScriptEventName() const
 
 		case CREATURE_EVENT_EXTENDED_OPCODE:
 			return "onExtendedOpcode";
+
+		case CREATURE_EVENT_MOVE:
+			return "onMove";
 
 		case CREATURE_EVENT_NONE:
 		default:
@@ -581,4 +586,26 @@ void CreatureEvent::executeExtendedOpcode(Player* player, uint8_t opcode, const 
 	LuaScriptInterface::pushString(L, buffer);
 
 	scriptInterface->callVoidFunction(3);
+}
+
+bool CreatureEvent::executeOnMove(Creature* creature, const Position& newPos, const Position& oldPos)
+{
+	//onMove(creature, newPos, oldPos)
+	if (!m_scriptInterface->reserveScriptEnv()) {
+		std::cout << "[Error - CreatureEvent::executeOnMove] Call stack overflow" << std::endl;
+	 	return false;
+	}
+
+	ScriptEnvironment* env = m_scriptInterface->getScriptEnv();
+	env->setScriptId(m_scriptId, m_scriptInterface);
+
+	lua_State* L = m_scriptInterface->getLuaState();
+
+	m_scriptInterface->pushFunction(m_scriptId);
+	LuaScriptInterface::pushUserdata<Creature>(L, creature);
+	LuaScriptInterface::setCreatureMetatable(L, -1, creature);
+	LuaScriptInterface::pushPosition(L, newPos);
+	LuaScriptInterface::pushPosition(L, oldPos);
+
+	return m_scriptInterface->callFunction(3);
 }
