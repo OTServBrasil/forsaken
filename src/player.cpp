@@ -435,6 +435,16 @@ void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 	}
 }
 
+bool Player::isDualWielding() const
+{
+	/* Not checking dual wield because the player can't wear two weapons worn without it */
+	if (this->getWeapon(CONST_SLOT_LEFT, true) && this->getWeapon(CONST_SLOT_RIGHT, true)) {
+		std::cout << "Player is dual wielding, returning true..." << std::endl;
+		return true;
+	}
+	return false;
+}
+
 int32_t Player::getDefense() const
 {
 	int32_t baseDefense = 5;
@@ -1851,8 +1861,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 uint32_t Player::getAttackSpeed() const {
 	uint32_t ret = vocation->getAttackSpeed();
 
-	/* Not checking dual wield because the player can't wear two weapons worn without it */
-	if (this->getWeapon(CONST_SLOT_LEFT, true) && this->getWeapon(CONST_SLOT_RIGHT, true)) {
+	if (isDualWielding()) {
 		ret = ret * g_config.getNumber(ConfigManager::DUAL_WIELDING_SPEED_RATE) / 100;
 	}
 
