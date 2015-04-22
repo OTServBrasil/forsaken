@@ -429,8 +429,11 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 		uint32_t skillPoint;
 		if (getSkillType(player, item, skillType, skillPoint)) {
 			/* Advance one point for every single-wielding hit OR one point for every left hand hit (every two) */
-			if (!player->isDualWielding() || item == player->getWeapon(CONST_SLOT_LEFT, true)) {
+			if (!player->isDualWielding() || !player->getBlockSkillAdvance()) {
 				player->addSkillAdvance(skillType, skillPoint);
+			}
+			if (player->getAttackHand() == CONST_SLOT_LEFT) {
+				player->switchBlockSkillAdvance();
 			}
 		}
 	}
