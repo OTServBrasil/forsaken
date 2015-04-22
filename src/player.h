@@ -636,6 +636,12 @@ class Player final : public Creature, public Cylinder
 		slots_t getAttackHand() const {
 			return lastAttackHand == HAND_LEFT ? CONST_SLOT_LEFT : CONST_SLOT_RIGHT;
 		}
+		void switchBlockSkillAdvance() {
+			blockSkillAdvance = !blockSkillAdvance;
+		}
+		bool getBlockSkillAdvance() {
+			return blockSkillAdvance;
+		}
 
 		Item* getWeapon(slots_t slot, bool ignoreAmmo) const;
 		Item* getWeapon(bool ignoreAmmo = false) const;
@@ -1301,6 +1307,7 @@ class Player final : public Creature, public Cylinder
 		fightMode_t fightMode;
 		AccountType_t accountType;
 		attackHand_t lastAttackHand;
+		bool blockSkillAdvance;
 
 		bool secureMode;
 		bool inMarket;
