@@ -47,7 +47,7 @@ local swap = function (lhs, rhs)
 end
 
 function Position:moveUpstairs()
-	local defaultPosition
+	local defaultPosition = self
 	while (self.z ~= 0) do
 		self.z = self.z - 1
 		if isWalkable(self) then
@@ -75,7 +75,7 @@ function Position:moveUpstairs()
 end
 
 function Position:moveDownstairs()
-	local defaultPosition
+	local defaultPosition = self
 	while (self.z ~= 15) do
 		self.z = self.z + 1
 		if isWalkable(self) then
