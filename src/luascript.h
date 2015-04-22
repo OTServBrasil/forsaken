@@ -728,6 +728,8 @@ class LuaScriptInterface
 		static int luaContainerAddItem(lua_State* L);
 		static int luaContainerAddItemEx(lua_State* L);
 
+		static int luaContainerGetContentDescription(lua_State* L);
+
 		// Teleport
 		static int luaTeleportCreate(lua_State* L);
 
@@ -1238,6 +1240,8 @@ class LuaScriptInterface
 		static int luaPartyIsSharedExperienceEnabled(lua_State* L);
 		static int luaPartyShareExperience(lua_State* L);
 		static int luaPartySetSharedExperience(lua_State* L);
+
+		static int luaPartyBroadcastLoot(lua_State* L);
 
 		//
 		lua_State* luaState;

@@ -7,7 +7,7 @@ function MonsterType.createLoot(self, corpse, modifier)
 		return
 	end
 
-	local owner = Player(corpse:getAttribute(ITEM_ATTRIBUTE_OWNER))
+	local owner = Player(corpse:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER))
 
 	if not owner or owner:getStamina() > 840 then
 		for _, v in pairs(self:getLoot()) do

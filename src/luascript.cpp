@@ -2009,6 +2009,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Container", "addItem", LuaScriptInterface::luaContainerAddItem);
 	registerMethod("Container", "addItemEx", LuaScriptInterface::luaContainerAddItemEx);
 
+	registerMethod("Container", "getContentDescription", LuaScriptInterface::luaContainerGetContentDescription);
+
 	// Teleport
 	registerClass("Teleport", "Item", LuaScriptInterface::luaTeleportCreate);
 	registerMetaMethod("Teleport", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2537,6 +2539,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Party", "isSharedExperienceEnabled", LuaScriptInterface::luaPartyIsSharedExperienceEnabled);
 	registerMethod("Party", "shareExperience", LuaScriptInterface::luaPartyShareExperience);
 	registerMethod("Party", "setSharedExperience", LuaScriptInterface::luaPartySetSharedExperience);
+
+	registerMethod("Party", "broadcastLoot", LuaScriptInterface::luaPartyBroadcastLoot);
 }
 
 #undef registerEnum
@@ -6505,6 +6509,18 @@ int LuaScriptInterface::luaContainerAddItemEx(lua_State* L)
 		ScriptEnvironment::removeTempItem(item);
 	}
 	lua_pushnumber(L, ret);
+	return 1;
+}
+
+int LuaScriptInterface::luaContainerGetContentDescription(lua_State* L)
+{
+	// container:getContentDescription()
+	Container* container = getUserdata<Container>(L, 1);
+	if (container) {
+		pushString(L, container->getContentDescription());
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 
@@ -12059,6 +12075,20 @@ int LuaScriptInterface::luaPartySetSharedExperience(lua_State* L)
 	Party* party = getUserdata<Party>(L, 1);
 	if (party) {
 		pushBoolean(L, party->setSharedExperience(party->getLeader(), active));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPartyBroadcastLoot(lua_State* L)
+{
+	// party:broadcastLoot(lootMessage)
+	const std::string& lootMessage = getString(L, 2);
+	Party* party = getUserdata<Party>(L, 1);
+	if (party) {
+		party->broadcastPartyLoot(lootMessage);
+		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
 	}
