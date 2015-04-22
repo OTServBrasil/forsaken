@@ -2,12 +2,9 @@ local upFloorIds = {1386, 3678, 5543, 22845, 22846, 22949, 23668}
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if isInArray(upFloorIds, item.itemid) then
-		if item.itemid == 23668 then
-			fromPosition.z = fromPosition.z - 1
-		end
 		fromPosition:moveUpstairs()
 	else
-		fromPosition.z = fromPosition.z + 1
+		fromPosition:moveDownstairs()
 	end
 	if player:isPzLocked() and Tile(fromPosition):hasFlag(TILESTATE_PROTECTIONZONE) then
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
