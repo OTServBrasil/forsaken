@@ -26,7 +26,7 @@ function Position:moveUpstairs()
 		end
 
 		local ground = tile:getGround()
-		if not ground or ground:hasProperty(CONST_PROP_BLOCKSOLID) then
+		if not ground or ground:hasProperty(CONST_PROP_BLOCKSOLID) or ground:hasProperty(CONST_PROP_IMMOVABLEBLOCKPATH) then
 			return false
 		end
 
