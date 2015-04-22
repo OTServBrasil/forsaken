@@ -1307,8 +1307,8 @@ class Player final : public Creature, public Cylinder
 		fightMode_t fightMode;
 		AccountType_t accountType;
 		attackHand_t lastAttackHand;
-		bool blockSkillAdvance;
 
+		bool blockSkillAdvance;
 		bool secureMode;
 		bool inMarket;
 		bool wasMounted;
