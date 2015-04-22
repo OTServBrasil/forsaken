@@ -428,10 +428,12 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 		skills_t skillType;
 		uint32_t skillPoint;
 		if (getSkillType(player, item, skillType, skillPoint)) {
-			/* Advance one point for every single-wielding hit OR one point for every left hand hit (every two) */
+			/* Advance one point for every single-wielding hit OR one point for every two hit for each hand */
 			if (!player->isDualWielding() || !player->getBlockSkillAdvance()) {
 				player->addSkillAdvance(skillType, skillPoint);
 			}
+
+			/* For every dual-wielding turn (one hit for each hand), flip the block skill bit */
 			if (player->getAttackHand() == CONST_SLOT_LEFT) {
 				player->switchBlockSkillAdvance();
 			}
