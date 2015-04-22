@@ -3,7 +3,7 @@ function MonsterType.createLoot(self, corpse, modifier)
 		return
 	end
 
-	if configKeys.RATE_LOOT == 0 then
+	if configManager.getNumber(configKeys.RATE_LOOT) == 0 then
 		return
 	end
 
