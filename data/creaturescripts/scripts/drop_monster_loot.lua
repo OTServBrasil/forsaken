@@ -14,7 +14,7 @@ function onDeath(monster, corpse, killer, mostdamagekiller, lasthitunjustified, 
 
 	local modifier = 1
 	if owner and owner:isPlayer() then
-		corpse:setAttribute(ITEM_ATTRIBUTE_OWNER, owner:getId())
+		corpse:setAttribute(ITEM_ATTRIBUTE_CORPSEOWNER, owner:getId())
 	end
 
 	monster:getType():createLoot(corpse, 1)
