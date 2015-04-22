@@ -510,6 +510,8 @@ class Player final : public Creature, public Cylinder
 		void setVarStats(stats_t stat, int32_t modifier);
 		int32_t getDefaultStats(stats_t stat) const;
 
+		void setExtraAttackSpeed(uint16_t _extraAttackSpeed);
+
 		void addConditionSuppressions(uint32_t conditions);
 		void removeConditionSuppressions(uint32_t conditions);
 
@@ -654,6 +656,8 @@ class Player final : public Creature, public Cylinder
 		void drainMana(Creature* attacker, int32_t manaLoss) final;
 		void addManaSpent(uint64_t amount);
 		void addSkillAdvance(skills_t skill, uint64_t count);
+
+		uint16_t getExtraAttackSpeed() const;
 
 		int32_t getArmor() const final;
 		int32_t getDefense() const final;
@@ -1292,6 +1296,7 @@ class Player final : public Creature, public Cylinder
 		uint16_t lastStatsTrainingTime;
 		uint16_t staminaMinutes;
 		uint16_t maxWriteLen;
+		uint16_t extraAttackSpeed;
 		int16_t lastDepotId;
 
 		uint8_t soul;

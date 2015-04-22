@@ -99,6 +99,7 @@ Player::Player(ProtocolGame_ptr p) :
 	addAttackSkillPoint = false;
 	lastAttack = 0;
 	lastAttackHand = HAND_LEFT;
+	extraAttackSpeed = 0;
 
 	blessings = 0;
 
@@ -669,6 +670,10 @@ int32_t Player::getDefaultStats(stats_t stat) const
 		case STAT_MAGICPOINTS: return getBaseMagicLevel();
 		default: return 0;
 	}
+}
+
+void Player::setExtraAttackSpeed(uint16_t _extraAttackSpeed) {
+	extraAttackSpeed = _extraAttackSpeed;
 }
 
 void Player::addContainer(uint8_t cid, Container* container)
@@ -1874,7 +1879,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 }
 
 uint32_t Player::getAttackSpeed() const {
-	uint32_t ret = vocation->getAttackSpeed();
+	uint32_t ret = vocation->getAttackSpeed() - extraAttackSpeed;
 
 	if (isDualWielding()) {
 		double multiplier = 100.0 / static_cast<double>(g_config.getNumber(ConfigManager::DUAL_WIELDING_SPEED_RATE));
@@ -1882,6 +1887,10 @@ uint32_t Player::getAttackSpeed() const {
 	}
 
 	return ret;
+}
+
+uint16_t Player::getExtraAttackSpeed() const {
+	return extraAttackSpeed;
 }
 
 uint8_t Player::getPercentLevel(uint64_t count, uint64_t nextLevelCount)

@@ -2244,6 +2244,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getContainerById", LuaScriptInterface::luaPlayerGetContainerById);
 	registerMethod("Player", "getContainerIndex", LuaScriptInterface::luaPlayerGetContainerIndex);
 
+	registerMethod("Player", "setExtraAttackSpeed", LuaScriptInterface::luaPlayerSetExtraAttackSpeed);
+	registerMethod("Player", "getExtraAttackSpeed", LuaScriptInterface::luaPlayerGetExtraAttackSpeed);
+
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
 	registerMetaMethod("Monster", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -9247,6 +9250,31 @@ int LuaScriptInterface::luaPlayerGetContainerIndex(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->getContainerIndex(getNumber<uint8_t>(L, 2)));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerSetExtraAttackSpeed(lua_State* L)
+{
+	// player:setExtraAttackSpeed(extraAttackSpeed)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		player->setExtraAttackSpeed(getNumber<uint16_t>(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetExtraAttackSpeed(lua_State* L)
+{
+	// player:getExtraAttackSpeed()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getExtraAttackSpeed());
 	} else {
 		lua_pushnil(L);
 	}
