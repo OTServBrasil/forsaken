@@ -67,6 +67,8 @@ function Position:moveUpstairs()
 					return self
 				end
 			end
+		else
+			break
 		end
 	end
 
@@ -95,6 +97,8 @@ function Position:moveDownstairs()
 					return self
 				end
 			end
+		else
+			break
 		end
 	end
 
