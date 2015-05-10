@@ -848,7 +848,6 @@ ReturnValue Game::internalMoveCreature(Creature& creature, Tile& toTile, uint32_
 
 		if (creature.getParent() != subCylinder) {
 			//could happen if a script move the creature
-			fromCylinder = nullptr;
 			break;
 		}
 
