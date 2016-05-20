@@ -764,13 +764,6 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 		for (CreatureEvent* deathEvent : getCreatureEvents(CREATURE_EVENT_DEATH)) {
 			deathEvent->executeOnDeath(this, corpse, lastHitCreature, mostDamageCreature, lastHitUnjustified, mostDamageUnjustified);
 		}
-<<<<<<< c5e91ccb1b9cc4fdaa052e4711ca028b766da7d9
-
-		if (corpse) {
-			dropLoot(corpse->getContainer(), lastHitCreature);
-		}
-=======
->>>>>>> Moved monster drop loot to Lua
 	}
 
 	return true;
