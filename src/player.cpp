@@ -436,12 +436,11 @@ void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 				case WEAPON_NONE:
 					break;
 
-				case WEAPON_SHIELD: {
+				case WEAPON_SHIELD:
 					if (!shield || item->getDefense() > shield->getDefense()) {
 						shield = item;
 					}
 					break;
-				}
 
 				default: { // weapons that are not shields
 					weapon = item;

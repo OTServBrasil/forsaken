@@ -591,21 +591,21 @@ void CreatureEvent::executeExtendedOpcode(Player* player, uint8_t opcode, const 
 bool CreatureEvent::executeOnMove(Creature* creature, const Position& newPos, const Position& oldPos)
 {
 	//onMove(creature, newPos, oldPos)
-	if (!m_scriptInterface->reserveScriptEnv()) {
+	if (!scriptInterface->reserveScriptEnv()) {
 		std::cout << "[Error - CreatureEvent::executeOnMove] Call stack overflow" << std::endl;
 	 	return false;
 	}
 
-	ScriptEnvironment* env = m_scriptInterface->getScriptEnv();
-	env->setScriptId(m_scriptId, m_scriptInterface);
+	ScriptEnvironment* env = scriptInterface->getScriptEnv();
+	env->setScriptId(scriptId, scriptInterface);
 
-	lua_State* L = m_scriptInterface->getLuaState();
+	lua_State* L = scriptInterface->getLuaState();
 
-	m_scriptInterface->pushFunction(m_scriptId);
+	scriptInterface->pushFunction(scriptId);
 	LuaScriptInterface::pushUserdata<Creature>(L, creature);
 	LuaScriptInterface::setCreatureMetatable(L, -1, creature);
 	LuaScriptInterface::pushPosition(L, newPos);
 	LuaScriptInterface::pushPosition(L, oldPos);
 
-	return m_scriptInterface->callFunction(3);
+	return scriptInterface->callFunction(3);
 }
