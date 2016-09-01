@@ -603,7 +603,7 @@ BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32
 		}
 
 		if (elementMod != 0) {
-			damage = static_cast<int32_t>(std::ceil(damage * ((100 - elementMod) / 100.)));
+			damage = static_cast<int32_t>(std::round(damage * ((100 - elementMod) / 100.)));
 			if (damage <= 0) {
 				damage = 0;
 				blockType = BLOCK_ARMOR;
@@ -1107,7 +1107,7 @@ bool Monster::getNextStep(Direction& direction, uint32_t& flags)
 	}
 
 	bool result = false;
-	if (((!followCreature || !hasFollowPath) && (isSummon() && !isMasterInRange))) {
+	if ((!followCreature || !hasFollowPath) && (!isSummon() || !isMasterInRange)) {
 		if (followCreature || getTimeSinceLastMove() > 1000) {
 			//choose a random direction
 			result = getRandomStep(getPosition(), direction);
