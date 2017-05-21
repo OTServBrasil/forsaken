@@ -54,6 +54,7 @@ marketOfferDuration = 30 * 24 * 60 * 60
 premiumToCreateMarketOffer = true
 checkExpiredMarketOffersEachMinutes = 60
 maxMarketOffersAtATimePerPlayer = 100
+novavariavel = 10
 
 -- MySQL
 mysqlHost = "127.0.0.1"
